@@ -8,88 +8,93 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.smileup.R;
 
-public class ImportSlidingMenu
-{
-  private Activity context;
-  private ImageView editButton;
-  private int[] icons = { 2130837658, 2130837660, 2130837661, 2130837725, 2130837663, 2130837709 };
-  private ArrayList<HashMap<String, Object>> itemContentList = new ArrayList();
-  private ListView list;
-  private OnItemClickListenerForSlidingMenu mItemListener;
-  private View.OnClickListener mOnClickListener;
-  private ArrayList<Object> ownInfo;
-  private String[] subtitle = { "Be a hero for your cause.", "Find new causes.", "You have 2 new notifications.", "Find the people who support your cause!", "Find help and answers.", "Learn more about SmileUP" };
-  private String[] title = { "Create Campaign", "Discover", "View Notifications", "Find Friends", "FAQ", "About" };
+public class ImportSlidingMenu {
+	private Activity context;
+	private ImageView editButton;
 
-  public ImportSlidingMenu(Activity paramActivity)
-  {
-    this.context = paramActivity;
-  }
+	private ArrayList<HashMap<String, Object>> itemContentList = new ArrayList<HashMap<String, Object>>();
+	private ListView list;
+	private OnItemClickListener mItemListener;
+	private View.OnClickListener mOnClickListener;
+	private ArrayList<Object> ownInfo;
 
-  private void setListViewData(ListView paramListView)
-  {
-    for (int i = 0; ; i++)
-    {
-      if (i >= this.title.length)
-      {
-        paramListView.setAdapter(new SimpleAdapter(this.context, this.itemContentList, 2130903095, new String[] { "title", "subtitle", "icon" }, new int[] { 2131034296, 2131034297, 2131034295 }));
-        return;
-      }
-      HashMap localHashMap = new HashMap();
-      localHashMap.put("title", this.title[i]);
-      localHashMap.put("subtitle", this.subtitle[i]);
-      localHashMap.put("icon", Integer.valueOf(this.icons[i]));
-      this.itemContentList.add(localHashMap);
-    }
-  }
+	private int[] icons = { R.drawable.grey_campaign, R.drawable.grey_discover,
+			R.drawable.grey_face, R.drawable.white_person, R.drawable.grey_faq,
+			R.drawable.smileupicon };
+	private String[] subtitle = { "Be a hero for your cause.",
+			"Find new causes.", "You have 2 new notifications.",
+			"Find the people who support your cause!",
+			"Find help and answers.", "Learn more about SmileUP" };
+	private String[] title = { "Create Campaign", "Discover",
+			"View Notifications", "Find Friends", "FAQ", "About" };
 
-  public SlidingMenu createLeftMenu()
-  {
-    SlidingMenu localSlidingMenu = new SlidingMenu(this.context);
-    localSlidingMenu.setMode(0);
-    localSlidingMenu.setTouchModeAbove(1);
-    localSlidingMenu.setTouchModeBehind(0);
-    localSlidingMenu.setFadeDegree(0.35F);
-    localSlidingMenu.setClickable(true);
-    localSlidingMenu.setFocusable(true);
-    localSlidingMenu.setFocusableInTouchMode(true);
-    localSlidingMenu.setBehindOffsetRes(2131230737);
-    localSlidingMenu.attachToActivity(this.context, 0);
-    localSlidingMenu.setMenu(2130903097);
-    this.list = ((ListView)localSlidingMenu.findViewById(2131034326));
-    setListViewData(this.list);
-    this.editButton = ((ImageView)localSlidingMenu.findViewById(2131034325));
-    return localSlidingMenu;
-  }
+	public ImportSlidingMenu(Activity paramActivity) {
+		this.context = paramActivity;
+	}
 
-  public void setDataSet(ArrayList<Object> paramArrayList)
-  {
-    this.ownInfo = paramArrayList;
-  }
+	public SlidingMenu createLeftMenu() {
+		SlidingMenu mSlideingMenu = new SlidingMenu(this.context);
+		mSlideingMenu.setMode(SlidingMenu.LEFT);
+		mSlideingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+		mSlideingMenu.setTouchModeBehind(SlidingMenu.TOUCHMODE_MARGIN);
+		mSlideingMenu.setFadeDegree(0.35F);
+		mSlideingMenu.setClickable(true);
+		mSlideingMenu.setFocusable(true);
+		mSlideingMenu.setFocusableInTouchMode(true);
+		mSlideingMenu.setBehindOffsetRes(R.dimen.slidemenu_horizontal_offset);
+		mSlideingMenu
+				.attachToActivity(this.context, SlidingMenu.SLIDING_WINDOW);
+		mSlideingMenu.setMenu(R.layout.leftslidingmenu_main);
 
-  public void setItemClickListenerForSlidingMenu(OnItemClickListenerForSlidingMenu paramOnItemClickListenerForSlidingMenu)
-  {
-    this.mItemListener = paramOnItemClickListenerForSlidingMenu;
-    if (this.mItemListener != null)
-      this.list.setOnItemClickListener(this.mItemListener);
-  }
+		this.list = ((ListView) mSlideingMenu.getMenu().findViewById(
+				R.id.leftmenu_constant_main));
 
-  public void setOnClickListenerForSlidingMenu(View.OnClickListener paramOnClickListener)
-  {
-    this.mOnClickListener = paramOnClickListener;
-    if (this.mOnClickListener != null)
-      this.editButton.setOnClickListener(this.mOnClickListener);
-  }
+		setListViewData(this.list);
 
-  public static abstract interface OnItemClickListenerForSlidingMenu extends AdapterView.OnItemClickListener
-  {
-  }
+		this.editButton = ((ImageView) mSlideingMenu.getMenu().findViewById(
+				R.id.setting_leftslidingmenu));
+		return mSlideingMenu;
+	}
+
+	public void setDataSet(ArrayList<Object> paramArrayList) {
+		this.ownInfo = paramArrayList;
+	}
+
+	public void setListViewItemClickListener(OnItemClickListener itemListener) {
+		this.mItemListener = itemListener;
+		if (this.mItemListener != null)
+			this.list.setOnItemClickListener(this.mItemListener);
+	}
+
+	public void setSettingsOnClickListener(View.OnClickListener clickListener) {
+		this.mOnClickListener = clickListener;
+		if (this.mOnClickListener != null)
+			this.editButton.setOnClickListener(this.mOnClickListener);
+	}
+
+	private void setListViewData(ListView list) {
+
+		for (int i = 0; i < this.title.length; i++) {
+			HashMap<String, Object> hashmap = new HashMap<String, Object>();
+
+			hashmap.put("title", this.title[i]);
+			hashmap.put("subtitle", this.subtitle[i]);
+			hashmap.put("icon", Integer.valueOf(this.icons[i]));
+
+			this.itemContentList.add(hashmap);
+		}
+		list.setAdapter(new SimpleAdapter(this.context, this.itemContentList,
+				R.layout.item_listview_leftslidingmenu, new String[] { "title",
+						"subtitle", "icon" }, new int[] {
+						R.id.title_itemlistview_leftslidingmenu,
+						R.id.subtitle_itemlistview_leftslidingmenu,
+						R.id.icon_itemlistview_leftslidingmenu }));
+
+	}
+
 }
-
-/* Location:           C:\Users\Hanyu\Desktop\classes_dex2jar.jar
- * Qualified Name:     com.smileup.appv1.tools.ImportSlidingMenu
- * JD-Core Version:    0.6.0
- */

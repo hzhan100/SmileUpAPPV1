@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <com.smileup.preferences.PhotoPreference android:key="photo_preference" />
+
+    <com.smileup.preferences.MyPreferenceCategory android:title="Intro" >
+        <com.smileup.preferences.DialogPreference android:key="intro_preference" />
+    </com.smileup.preferences.MyPreferenceCategory>
+    <com.smileup.preferences.MyPreferenceCategory android:title="Personal" >
+        <com.smileup.preferences.DialogPreference android:key="email_preference" />
+        <com.smileup.preferences.DialogPreference android:key="password_preference" />
+        <com.smileup.preferences.DialogPreference android:key="firstname_preference" />
+        <com.smileup.preferences.DialogPreference android:key="lastname_preference" />
+
+        <com.smileup.preferences.SwitchPreference android:key="gender_preference" />
+    </com.smileup.preferences.MyPreferenceCategory>
+    <com.smileup.preferences.MyPreferenceCategory android:title="System" >
+        <com.smileup.preferences.SwitchPreference android:key="notification_preference" />
+
+        <CheckBoxPreference
+            android:key="friend_requests_preference"
+            android:title="Friend Requests" />
+        <CheckBoxPreference
+            android:key="donations_preference "
+            android:title="Donations to my Campaigns" />
+        <CheckBoxPreference
+            android:key="campaigns_from_friends_preference"
+            android:title="New Campaigns from Friends" />
+    </com.smileup.preferences.MyPreferenceCategory>
+    <com.smileup.preferences.MyPreferenceCategory android:title="Shares" >
+        <com.smileup.preferences.SwitchPreference android:key="sharing_preference" />
+
+        <com.smileup.preferences.ToggleButtonPreference android:key="facebook_account_preference" />
+        <com.smileup.preferences.ToggleButtonPreference android:key="twitter_account_preference" />
+        <com.smileup.preferences.ToggleButtonPreference android:key="tumblr_account_preference" />
+        <com.smileup.preferences.ToggleButtonPreference android:key="linkedin_account_preference" />
+        <com.smileup.preferences.ToggleButtonPreference android:key="gmail_account_preference" />
+    </com.smileup.preferences.MyPreferenceCategory>
+    <com.smileup.preferences.MyPreferenceCategory android:title="Privacy" >
+        <com.smileup.preferences.SwitchPreference android:key="protect_account_preference" />
+    </com.smileup.preferences.MyPreferenceCategory>
+
+</PreferenceScreen>
